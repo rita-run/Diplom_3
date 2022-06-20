@@ -3,13 +3,11 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pages.LoginPage;
-import pages.OrderConstructorPage;
-import pages.UserProfilePage;
+import pages.*;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class LoginTest {
+public class NavigatingToLoginPageTest {
     @Before
     public void init() {
         Configuration.startMaximized = true;
@@ -27,23 +25,23 @@ public class LoginTest {
     }
 
     @Test
-    @DisplayName("Login after navigating to the Login page from the Order Constructor page via login button test")
-    public void loginViaLoginButtonTest() {
-        OrderConstructorPage orderConstructorPage = open("https://stellarburgers.nomoreparties.site/", OrderConstructorPage.class);
-        orderConstructorPage.clickLoginButton();
-        LoginPage loginPage = orderConstructorPage.goToTheLoginPage();
+    @DisplayName("Login after navigating to the Login page from the Register page test")
+    public void loginFromRegisterPageTest() {
+        RegisterPage registerPage = open("https://stellarburgers.nomoreparties.site/register", RegisterPage.class);
+        registerPage.clickLoginButton();
+        LoginPage loginPage = registerPage.goToTheLoginPage();
         loginPage.sendTheLoginForm("harry1@mail.ru", "password");
+        OrderConstructorPage orderConstructorPage = loginPage.goToOrderConstructorPage();
         orderConstructorPage.assertThatConstructorPageIsLoaded();
     }
 
     @Test
-    @DisplayName("Login after navigating to the Login page from the Order Constructor page via profile button test")
-    public void loginViaProfileButtonTest() {
-        OrderConstructorPage orderConstructorPage = open("https://stellarburgers.nomoreparties.site/", OrderConstructorPage.class);
-        orderConstructorPage.clickUserProfileButton();
-        LoginPage loginPage = orderConstructorPage.goToTheLoginPage();
+    @DisplayName("Login after navigating to the Login page from the Forgot Password page test")
+    public void loginFromForgotPasswordPageTest() {
+        ForgotPasswordPage forgotPasswordPage = open("https://stellarburgers.nomoreparties.site/forgot-password", ForgotPasswordPage.class);
+        LoginPage loginPage = forgotPasswordPage.goToTheLoginPage();
         loginPage.sendTheLoginForm("harry1@mail.ru", "password");
+        OrderConstructorPage orderConstructorPage = loginPage.goToOrderConstructorPage();
         orderConstructorPage.assertThatConstructorPageIsLoaded();
     }
-
 }

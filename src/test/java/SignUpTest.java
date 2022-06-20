@@ -1,24 +1,29 @@
+import com.codeborne.selenide.Configuration;
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import pages.*;
 import static com.codeborne.selenide.Selenide.open;
-import java.util.Random;
-import java.nio.charset.Charset;
-import com.codeborne.selenide.Selenide;
 
+import java.util.Random;
 
 public class SignUpTest {
-    private String generateName() {
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String name = new String(array, Charset.forName("UTF-8"));
-        return name;
-    }
 
-    @After
-    public void closeWindow() {
-        Selenide.closeWindow();
+    @Before
+    public void init() {
+        Configuration.startMaximized = true;
+    }
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    public String generateName() {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder(7);
+
+        for (int i = 0; i < 7; i++) {
+            builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+        }
+
+        return builder.toString();
     }
 
     @Test
@@ -28,8 +33,9 @@ public class SignUpTest {
         orderConstructorPage.clickLoginButton();
         LoginPage loginPage = orderConstructorPage.goToTheLoginPage();
         RegisterPage registerPage = loginPage.goToTheRegisterPage();
-        registerPage.sendTheSignUpForm(generateName(), generateName() + "gmail.com", "password");
-        loginPage.waitForLoadLoginPage();
+        registerPage.sendTheSignUpForm(generateName(), generateName() + "@gmail.com", "password");
+        LoginPage newLoginPage = registerPage.goToTheLoginPage();
+        newLoginPage.assertThatLoginPageIsLoaded();
     }
 
     @Test
@@ -39,7 +45,7 @@ public class SignUpTest {
         orderConstructorPage.clickLoginButton();
         LoginPage loginPage = orderConstructorPage.goToTheLoginPage();
         RegisterPage registerPage = loginPage.goToTheRegisterPage();
-        registerPage.sendTheSignUpForm(generateName(), generateName() + "gmail.com", "12345");
-        registerPage.checkInvalidPassMessage();
+        registerPage.sendTheSignUpForm(generateName(), generateName() + "@gmail.com", "12345");
+        registerPage.assertThatInvalidPassMessageIsShown();
     }
 }

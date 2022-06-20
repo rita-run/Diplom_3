@@ -1,25 +1,36 @@
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import org.junit.After;
+import com.codeborne.selenide.Configuration;
+import io.qameta.allure.junit4.DisplayName;
+import org.junit.Before;
 import org.junit.Test;
 import pages.OrderConstructorPage;
-import io.qameta.allure.junit4.DisplayName;
 
 import static com.codeborne.selenide.Selenide.open;
 
 public class ConstructorTest {
-    @After
-    public void closeWindow() {
-        Selenide.closeWindow();
+
+    @Before
+    public void init() {
+        Configuration.startMaximized = true;
     }
 
     @Test
-    @DisplayName("Switching between Buns, Sauces and Fillings Test")
-    public void SectionSwitchingTest() {
+    @DisplayName("Clicking on the Sauces folder should open the Sauces section test")
+    public void switchingToSaucesTest() {
         OrderConstructorPage orderConstructorPage = open("https://stellarburgers.nomoreparties.site/", OrderConstructorPage.class);
-        WebDriverRunner.getWebDriver().manage().window().maximize();
-        orderConstructorPage.switchToSauces();
-        orderConstructorPage.switchToFillings();
-        orderConstructorPage.switchToBuns();
+        orderConstructorPage.assertThatFolderSwitchedToSauces();
+    }
+
+    @Test
+    @DisplayName("Clicking on the Fillings folder should open the Fillings section test")
+    public void switchingToFillingsTest() {
+        OrderConstructorPage orderConstructorPage = open("https://stellarburgers.nomoreparties.site/", OrderConstructorPage.class);
+        orderConstructorPage.assertThatFolderSwitchedToFillings();
+    }
+
+    @Test
+    @DisplayName("Clicking on the Buns folder should open the Buns section test")
+    public void switchingToBunsTest() {
+        OrderConstructorPage orderConstructorPage = open("https://stellarburgers.nomoreparties.site/", OrderConstructorPage.class);
+        orderConstructorPage.assertThatFolderSwitchedToBuns();
     }
 }
