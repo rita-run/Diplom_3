@@ -13,10 +13,10 @@ public class UserProfilePage {
     private SelenideElement constructorButton = $(byText("Конструктор"));
     private SelenideElement stellarBurgersLogo = $(byClassName("AppHeader_header__logo__2D0X2"));
 
-    public void waitForUserProfileToLoad(){
-        $(byClassName("App_componentContainer__2JC2W")).shouldBe(visible);
+    public void assertThatProfilePageIsLoaded(){
+        $(byText("В этом разделе вы можете изменить свои персональные данные")).shouldBe(visible);
     }
-    public void logout(){
+    public void clickLogoutButton() {
         logoutButton.click();
     }
 
@@ -30,7 +30,13 @@ public class UserProfilePage {
 
     public OrderConstructorPage goToConstructorPage() {
         OrderConstructorPage orderConstructorPage = page(OrderConstructorPage.class);
-        orderConstructorPage.waitConstructorPageLoad();
+        orderConstructorPage.assertThatConstructorPageIsLoaded();
         return orderConstructorPage;
+    }
+
+    public LoginPage goToTheLoginPage(){
+        LoginPage loginPage = page(LoginPage.class);
+        loginPage.assertThatLoginPageIsLoaded();
+        return loginPage;
     }
 }

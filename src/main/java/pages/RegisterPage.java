@@ -13,8 +13,9 @@ public class RegisterPage {
     private SelenideElement signUpButton = $(byText("Зарегистрироваться"));
     private SelenideElement invalidPasswordMessage = $(byText("Некорректный пароль"));
     private SelenideElement loginButton = $(byText("Войти"));
-    public void waitForLoadRegisterPage() {
-        $(byClassName("Auth_login__3hAey")).shouldBe(visible);
+
+    public void assertThatRegisterPageIsLoaded() {
+        $(byText("Регистрация")).shouldBe(visible);
     }
 
     public void sendTheSignUpForm(String name, String email, String password) {
@@ -24,7 +25,7 @@ public class RegisterPage {
         signUpButton.click();
     }
 
-    public void checkInvalidPassMessage() {
+    public void assertThatInvalidPassMessageIsShown() {
         invalidPasswordMessage.shouldBe(visible);
     }
 
@@ -34,7 +35,7 @@ public class RegisterPage {
 
     public LoginPage goToTheLoginPage(){
         LoginPage loginPage = page(LoginPage.class);
-        loginPage.waitForLoadLoginPage();
+        loginPage.assertThatLoginPageIsLoaded();
         return loginPage;
     }
 }

@@ -2,54 +2,54 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byClassName;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class OrderConstructorPage {
     private SelenideElement loginButton = $(byText("Войти в аккаунт"));
-    private SelenideElement bunsFolder = $$(byText("Булки")).get(0);
-    private SelenideElement saucesFolder = $$(byText("Соусы")).get(0);
-    private SelenideElement fillingsFolder = $$(byText("Начинки")).get(0);
+    private SelenideElement bunsFolder = $(byXpath("//div[span[text()=\"Булки\"]]"));
+    private SelenideElement saucesFolder = $(byXpath("//div[span[text()=\"Соусы\"]]"));
+    private SelenideElement fillingsFolder = $(byXpath("//div[span[text()=\"Начинки\"]]"));
     private SelenideElement userProfileButton = $(byText("Личный Кабинет"));
 
 
-    public void clickLoginButton(){
+    public void clickLoginButton() {
         loginButton.click();
     }
 
     public void clickUserProfileButton() {
         userProfileButton.click();
     }
-    public void waitConstructorPageLoad(){
-        $(byClassName("App_componentContainer__2JC2W")).shouldBe(visible);
+
+    public void assertThatConstructorPageIsLoaded() {
+        $(byText("Соберите бургер")).shouldBe(visible);
     }
 
-    public void switchToSauces(){
+    public void assertThatFolderSwitchedToSauces() {
         saucesFolder.click();
-        $$(byText("Соусы")).get(1).shouldBe(visible);
+        $(byXpath("//div[span[text()=\"Соусы\"]]")).should(cssClass("tab_tab_type_current__2BEPc"));
     }
 
-    public void switchToFillings(){
+    public void assertThatFolderSwitchedToFillings() {
         fillingsFolder.click();
-        $$(byText("Начинки")).get(1).shouldBe(visible);
+        $(byXpath("//div[span[text()=\"Начинки\"]]")).should(cssClass("tab_tab_type_current__2BEPc"));
     }
 
-    public void switchToBuns(){
+    public void assertThatFolderSwitchedToBuns() {
         bunsFolder.click();
-        $$(byText("Булки")).get(1).shouldBe(visible);
+        $(byXpath("//div[span[text()=\"Булки\"]]")).should(cssClass("tab_tab_type_current__2BEPc"));
     }
 
     public UserProfilePage goToTheUserProfilePage() {
         UserProfilePage userProfilePage = page(UserProfilePage.class);
-        userProfilePage.waitForUserProfileToLoad();
+        userProfilePage.assertThatProfilePageIsLoaded();
         return userProfilePage;
     }
 
-    public LoginPage goToTheLoginPage(){
+    public LoginPage goToTheLoginPage() {
         LoginPage loginPage = page(LoginPage.class);
-        loginPage.waitForLoadLoginPage();
+        loginPage.assertThatLoginPageIsLoaded();
         return loginPage;
     }
 }

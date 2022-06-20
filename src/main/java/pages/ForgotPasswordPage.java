@@ -12,7 +12,7 @@ public class ForgotPasswordPage {
     public LoginPage goToTheLoginPage(){
         loginButton.click();
         LoginPage loginPage = page(LoginPage.class);
-        loginPage.waitForLoadLoginPage();
+        loginPage.assertThatLoginPageIsLoaded();
         return loginPage;
     }
 }

@@ -7,13 +7,18 @@ import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
+    private SelenideElement constructorButton = $(byText("Конструктор"));
     private SelenideElement signUpButton = $(byText("Зарегистрироваться"));
     private SelenideElement emailField = $(byXpath("//input[@name = 'name']"));
     private SelenideElement passField = $(byXpath("//input[@name = 'Пароль']"));
     private SelenideElement loginButton = $(byText("Войти"));
 
-    public void waitForLoadLoginPage() {
-        $(byClassName("App_componentContainer__2JC2W")).shouldBe(visible);
+    public void assertThatLoginPageIsLoaded() {
+        $(byTextCaseInsensitive("Вход")).shouldBe(visible);
+    }
+
+    public void clickConstructorButton() {
+        constructorButton.click();
     }
 
     public void clickSignUpButton() {
@@ -26,19 +31,18 @@ public class LoginPage {
         loginButton.click();
     }
 
-    public RegisterPage goToTheRegisterPage(){
+    public RegisterPage goToTheRegisterPage() {
         clickSignUpButton();
         RegisterPage registerPage = page(RegisterPage.class);
-        registerPage.waitForLoadRegisterPage();
+        registerPage.assertThatRegisterPageIsLoaded();
         return registerPage;
     }
 
-    public OrderConstructorPage goToOrderConstructorPage(){
+    public OrderConstructorPage goToOrderConstructorPage() {
         OrderConstructorPage orderConstructorPage = page(OrderConstructorPage.class);
-        orderConstructorPage.waitConstructorPageLoad();
+        orderConstructorPage.assertThatConstructorPageIsLoaded();
         return orderConstructorPage;
     }
-
 
 }
 
