@@ -51,6 +51,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
+                    <forkCount>2</forkCount>
+                    <reuseForks>true</reuseForks>
                     <testFailureIgnore>false</testFailureIgnore>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -61,6 +63,9 @@
                             <value>io.qameta.allure.junit4.AllureJunit4</value>
                         </property>
                     </properties>
+                    <systemPropertyVariables>
+                        <browserNumber>browser_${surefire.forkNumber}</browserNumber>
+                    </systemPropertyVariables>
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>
