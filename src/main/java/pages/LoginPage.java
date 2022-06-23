@@ -4,14 +4,15 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 
 public class LoginPage {
-    private SelenideElement constructorButton = $(byText("Конструктор"));
-    private SelenideElement signUpButton = $(byText("Зарегистрироваться"));
-    private SelenideElement emailField = $(byXpath("//input[@name = 'name']"));
-    private SelenideElement passField = $(byXpath("//input[@name = 'Пароль']"));
-    private SelenideElement loginButton = $(byText("Войти"));
+    private final SelenideElement constructorButton = $(byText("Конструктор"));
+    private final SelenideElement signUpButton = $(byText("Зарегистрироваться"));
+    private final SelenideElement emailField = $(byXpath("//input[@name = 'name']"));
+    private final SelenideElement passField = $(byXpath("//input[@name = 'Пароль']"));
+    private final SelenideElement loginButton = $(byText("Войти"));
 
     public void assertThatLoginPageIsLoaded() {
         $(byTextCaseInsensitive("Вход")).shouldBe(visible);

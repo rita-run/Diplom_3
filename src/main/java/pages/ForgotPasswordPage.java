@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
 public class ForgotPasswordPage {
-    private SelenideElement loginButton = $(byText("Войти"));
+    private final SelenideElement loginButton = $(byText("Войти"));
 
     public LoginPage goToTheLoginPage(){
         loginButton.click();

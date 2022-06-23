@@ -2,16 +2,19 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.cssClass;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.byXpath;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 
 public class OrderConstructorPage {
-    private SelenideElement loginButton = $(byText("Войти в аккаунт"));
-    private SelenideElement bunsFolder = $(byXpath("//div[span[text()=\"Булки\"]]"));
-    private SelenideElement saucesFolder = $(byXpath("//div[span[text()=\"Соусы\"]]"));
-    private SelenideElement fillingsFolder = $(byXpath("//div[span[text()=\"Начинки\"]]"));
-    private SelenideElement userProfileButton = $(byText("Личный Кабинет"));
+    private final SelenideElement loginButton = $(byText("Войти в аккаунт"));
+    private final SelenideElement bunsFolder = $(byXpath("//div[span[text()=\"Булки\"]]"));
+    private final SelenideElement saucesFolder = $(byXpath("//div[span[text()=\"Соусы\"]]"));
+    private final SelenideElement fillingsFolder = $(byXpath("//div[span[text()=\"Начинки\"]]"));
+    private final SelenideElement userProfileButton = $(byText("Личный Кабинет"));
 
 
     public void clickLoginButton() {
